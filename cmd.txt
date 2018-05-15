@@ -1,0 +1,2 @@
+docker build -t="test4/redis" -f redis.dockerfile .
+docker run -dti -v ~/share:/share test4/redis
