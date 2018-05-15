@@ -1,2 +1,4 @@
 docker build -t="test4/redis" -f redis.dockerfile .
 docker run -dti -v ~/share:/share test4/redis
+docker run -d --name testmariadb -v ~/mariadb:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=users -e MYSQL_USER=users_service -e MYSQL_PASSWORD=xxxxx -p 3306:3306 mariadb
+docker exec -it testmariadb /bin/bash
