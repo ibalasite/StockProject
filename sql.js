@@ -13,7 +13,7 @@ function run(con)
 {
     con.connect(async function(err) {
       if (err) throw err;
-      console.log("Connected!");
+     // console.log("Connected!");
       var i=1;
       while (i<=5000) {
           var id = 100000+i
