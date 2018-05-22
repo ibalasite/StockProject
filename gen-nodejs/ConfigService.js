@@ -50,7 +50,7 @@ var ConfigService_getConfig_result = function(args) {
   }
   if (args) {
     if (args.success !== undefined && args.success !== null) {
-      this.success = Thrift.copyList(args.success, [ttypes.Config]);
+      this.success = args.success;
     }
     if (args.ouch !== undefined && args.ouch !== null) {
       this.ouch = args.ouch;
@@ -72,22 +72,8 @@ ConfigService_getConfig_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.SET) {
-        var _size0 = 0;
-        var _rtmp34;
-        this.success = [];
-        var _etype3 = 0;
-        _rtmp34 = input.readSetBegin();
-        _etype3 = _rtmp34.etype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
-        {
-          var elem6 = null;
-          elem6 = new ttypes.Config();
-          elem6.read(input);
-          this.success.push(elem6);
-        }
-        input.readSetEnd();
+      if (ftype == Thrift.Type.STRING) {
+        this.success = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -112,17 +98,8 @@ ConfigService_getConfig_result.prototype.read = function(input) {
 ConfigService_getConfig_result.prototype.write = function(output) {
   output.writeStructBegin('ConfigService_getConfig_result');
   if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.SET, 0);
-    output.writeSetBegin(Thrift.Type.STRUCT, this.success.length);
-    for (var iter7 in this.success)
-    {
-      if (this.success.hasOwnProperty(iter7))
-      {
-        iter7 = this.success[iter7];
-        iter7.write(output);
-      }
-    }
-    output.writeSetEnd();
+    output.writeFieldBegin('success', Thrift.Type.STRING, 0);
+    output.writeString(this.success);
     output.writeFieldEnd();
   }
   if (this.ouch !== null && this.ouch !== undefined) {
@@ -135,7 +112,7 @@ ConfigService_getConfig_result.prototype.write = function(output) {
   return;
 };
 
-var ConfigService_getConfigByPath_args = function(args) {
+var ConfigService_flushConfig_args = function(args) {
   this.paths = null;
   if (args) {
     if (args.paths !== undefined && args.paths !== null) {
@@ -143,8 +120,8 @@ var ConfigService_getConfigByPath_args = function(args) {
     }
   }
 };
-ConfigService_getConfigByPath_args.prototype = {};
-ConfigService_getConfigByPath_args.prototype.read = function(input) {
+ConfigService_flushConfig_args.prototype = {};
+ConfigService_flushConfig_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -159,18 +136,18 @@ ConfigService_getConfigByPath_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.SET) {
-        var _size8 = 0;
-        var _rtmp312;
+        var _size0 = 0;
+        var _rtmp34;
         this.paths = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readSetBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        var _etype3 = 0;
+        _rtmp34 = input.readSetBegin();
+        _etype3 = _rtmp34.etype;
+        _size0 = _rtmp34.size;
+        for (var _i5 = 0; _i5 < _size0; ++_i5)
         {
-          var elem14 = null;
-          elem14 = input.readString();
-          this.paths.push(elem14);
+          var elem6 = null;
+          elem6 = input.readString();
+          this.paths.push(elem6);
         }
         input.readSetEnd();
       } else {
@@ -189,17 +166,17 @@ ConfigService_getConfigByPath_args.prototype.read = function(input) {
   return;
 };
 
-ConfigService_getConfigByPath_args.prototype.write = function(output) {
-  output.writeStructBegin('ConfigService_getConfigByPath_args');
+ConfigService_flushConfig_args.prototype.write = function(output) {
+  output.writeStructBegin('ConfigService_flushConfig_args');
   if (this.paths !== null && this.paths !== undefined) {
     output.writeFieldBegin('paths', Thrift.Type.SET, 1);
     output.writeSetBegin(Thrift.Type.STRING, this.paths.length);
-    for (var iter15 in this.paths)
+    for (var iter7 in this.paths)
     {
-      if (this.paths.hasOwnProperty(iter15))
+      if (this.paths.hasOwnProperty(iter7))
       {
-        iter15 = this.paths[iter15];
-        output.writeString(iter15);
+        iter7 = this.paths[iter7];
+        output.writeString(iter7);
       }
     }
     output.writeSetEnd();
@@ -210,7 +187,7 @@ ConfigService_getConfigByPath_args.prototype.write = function(output) {
   return;
 };
 
-var ConfigService_getConfigByPath_result = function(args) {
+var ConfigService_flushConfig_result = function(args) {
   this.success = null;
   this.ouch = null;
   if (args instanceof ttypes.InvalidOperation) {
@@ -219,15 +196,15 @@ var ConfigService_getConfigByPath_result = function(args) {
   }
   if (args) {
     if (args.success !== undefined && args.success !== null) {
-      this.success = Thrift.copyList(args.success, [ttypes.Config]);
+      this.success = args.success;
     }
     if (args.ouch !== undefined && args.ouch !== null) {
       this.ouch = args.ouch;
     }
   }
 };
-ConfigService_getConfigByPath_result.prototype = {};
-ConfigService_getConfigByPath_result.prototype.read = function(input) {
+ConfigService_flushConfig_result.prototype = {};
+ConfigService_flushConfig_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -241,22 +218,8 @@ ConfigService_getConfigByPath_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.SET) {
-        var _size16 = 0;
-        var _rtmp320;
-        this.success = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readSetBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
-        {
-          var elem22 = null;
-          elem22 = new ttypes.Config();
-          elem22.read(input);
-          this.success.push(elem22);
-        }
-        input.readSetEnd();
+      if (ftype == Thrift.Type.STRING) {
+        this.success = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -278,20 +241,11 @@ ConfigService_getConfigByPath_result.prototype.read = function(input) {
   return;
 };
 
-ConfigService_getConfigByPath_result.prototype.write = function(output) {
-  output.writeStructBegin('ConfigService_getConfigByPath_result');
+ConfigService_flushConfig_result.prototype.write = function(output) {
+  output.writeStructBegin('ConfigService_flushConfig_result');
   if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.SET, 0);
-    output.writeSetBegin(Thrift.Type.STRUCT, this.success.length);
-    for (var iter23 in this.success)
-    {
-      if (this.success.hasOwnProperty(iter23))
-      {
-        iter23 = this.success[iter23];
-        iter23.write(output);
-      }
-    }
-    output.writeSetEnd();
+    output.writeFieldBegin('success', Thrift.Type.STRING, 0);
+    output.writeString(this.success);
     output.writeFieldEnd();
   }
   if (this.ouch !== null && this.ouch !== undefined) {
@@ -362,7 +316,7 @@ ConfigServiceClient.prototype.recv_getConfig = function(input,mtype,rseqid) {
   }
   return callback('getConfig failed: unknown result');
 };
-ConfigServiceClient.prototype.getConfigByPath = function(paths, callback) {
+ConfigServiceClient.prototype.flushConfig = function(paths, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -373,27 +327,27 @@ ConfigServiceClient.prototype.getConfigByPath = function(paths, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_getConfigByPath(paths);
+    this.send_flushConfig(paths);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_getConfigByPath(paths);
+    this.send_flushConfig(paths);
   }
 };
 
-ConfigServiceClient.prototype.send_getConfigByPath = function(paths) {
+ConfigServiceClient.prototype.send_flushConfig = function(paths) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('getConfigByPath', Thrift.MessageType.CALL, this.seqid());
+  output.writeMessageBegin('flushConfig', Thrift.MessageType.CALL, this.seqid());
   var params = {
     paths: paths
   };
-  var args = new ConfigService_getConfigByPath_args(params);
+  var args = new ConfigService_flushConfig_args(params);
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-ConfigServiceClient.prototype.recv_getConfigByPath = function(input,mtype,rseqid) {
+ConfigServiceClient.prototype.recv_flushConfig = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -402,7 +356,7 @@ ConfigServiceClient.prototype.recv_getConfigByPath = function(input,mtype,rseqid
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new ConfigService_getConfigByPath_result();
+  var result = new ConfigService_flushConfig_result();
   result.read(input);
   input.readMessageEnd();
 
@@ -412,7 +366,7 @@ ConfigServiceClient.prototype.recv_getConfigByPath = function(input,mtype,rseqid
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('getConfigByPath failed: unknown result');
+  return callback('flushConfig failed: unknown result');
 };
 var ConfigServiceProcessor = exports.Processor = function(handler) {
   this._handler = handler;
@@ -474,40 +428,40 @@ ConfigServiceProcessor.prototype.process_getConfig = function(seqid, input, outp
     });
   }
 };
-ConfigServiceProcessor.prototype.process_getConfigByPath = function(seqid, input, output) {
-  var args = new ConfigService_getConfigByPath_args();
+ConfigServiceProcessor.prototype.process_flushConfig = function(seqid, input, output) {
+  var args = new ConfigService_flushConfig_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.getConfigByPath.length === 1) {
-    Q.fcall(this._handler.getConfigByPath.bind(this._handler), args.paths)
+  if (this._handler.flushConfig.length === 1) {
+    Q.fcall(this._handler.flushConfig.bind(this._handler), args.paths)
       .then(function(result) {
-        var result_obj = new ConfigService_getConfigByPath_result({success: result});
-        output.writeMessageBegin("getConfigByPath", Thrift.MessageType.REPLY, seqid);
+        var result_obj = new ConfigService_flushConfig_result({success: result});
+        output.writeMessageBegin("flushConfig", Thrift.MessageType.REPLY, seqid);
         result_obj.write(output);
         output.writeMessageEnd();
         output.flush();
       }, function (err) {
         var result;
         if (err instanceof ttypes.InvalidOperation) {
-          result = new ConfigService_getConfigByPath_result(err);
-          output.writeMessageBegin("getConfigByPath", Thrift.MessageType.REPLY, seqid);
+          result = new ConfigService_flushConfig_result(err);
+          output.writeMessageBegin("flushConfig", Thrift.MessageType.REPLY, seqid);
         } else {
           result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-          output.writeMessageBegin("getConfigByPath", Thrift.MessageType.EXCEPTION, seqid);
+          output.writeMessageBegin("flushConfig", Thrift.MessageType.EXCEPTION, seqid);
         }
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       });
   } else {
-    this._handler.getConfigByPath(args.paths, function (err, result) {
+    this._handler.flushConfig(args.paths, function (err, result) {
       var result_obj;
       if ((err === null || typeof err === 'undefined') || err instanceof ttypes.InvalidOperation) {
-        result_obj = new ConfigService_getConfigByPath_result((err !== null || typeof err === 'undefined') ? err : {success: result});
-        output.writeMessageBegin("getConfigByPath", Thrift.MessageType.REPLY, seqid);
+        result_obj = new ConfigService_flushConfig_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("flushConfig", Thrift.MessageType.REPLY, seqid);
       } else {
         result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-        output.writeMessageBegin("getConfigByPath", Thrift.MessageType.EXCEPTION, seqid);
+        output.writeMessageBegin("flushConfig", Thrift.MessageType.EXCEPTION, seqid);
       }
       result_obj.write(output);
       output.writeMessageEnd();
