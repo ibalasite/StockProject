@@ -27,28 +27,3 @@ client.incr("test", function(err, reply) {
 });
 
 });
-/*
-var port=config.Redis.Port; 
-var host=config.Redis.Host; 
-var client = redis.createClient(port, host);
-);
-*/
-
-
-/*
-function INCR(key){
-client.on("error", function(error) {
-    console.log(error);
-});
-//client.on('connect', function() {
-//    console.log('connected');
-//});
-client.on("error", function(error) {
-    console.log(error);
-});
-client.incr(key, function(err, reply) {
-    if (err) throw err;
-    console.log(reply); // 11
-});
-client.quit();
-*/
