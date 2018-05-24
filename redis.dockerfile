@@ -2,4 +2,6 @@ FROM redis
 RUN apt-get update
 VOLUME ["/share"]
 EXPOSE 6379
-ENTRYPOINT hostname -i >> /share/hosts&redis-server&/bin/bash
+COPY start.sh /tmp/
+RUN  mv /tmp/start.sh /usr/bin 
+CMD ["start.sh"]
