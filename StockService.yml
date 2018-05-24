@@ -38,3 +38,25 @@ services:
      volumes:
        - ~/share:/share
      container_name: "redis4"
+   dev:
+     image: evansking/nodedev
+     command: jupyter lab --ip=0.0.0.0 --port=8888 --allow-root
+     volumes:
+       - ~/share:/share
+       - ~/data:/data
+     container_name: "dev"
+     ports:
+       - "3000:3000"
+       - "80:8888"
+     depends_on:
+       - db
+       - redis1
+       - redis2
+       - redis3
+       - redis4
+     links:
+       - redis1:test1
+       - redis2:test2
+       - redis3:test3
+       - redis4:test4
+       - db:rdb
