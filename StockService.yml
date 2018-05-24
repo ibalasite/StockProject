@@ -10,10 +10,10 @@ services:
      ports:
        - "3306:3306"
      environment:
-       MYSQL_ROOT_PASSWORD: 123456 
+       MYSQL_ROOT_PASSWORD: {yourpwd} 
        MYSQL_DATABASE: users
        MYSQL_USER: mysql
-       MYSQL_PASSWORD: 123456 
+       MYSQL_PASSWORD: {yourpwd} 
 
    redis1:
      image: evansking/redis
