@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+   db:
+     image: mariadb 
+     volumes:
+       - ~/data:/var/lib/mysql
+     restart: always
+     container_name: "rdb"
+     ports:
+       - "3306:3306"
+     environment:
+       MYSQL_ROOT_PASSWORD: 123456 
+       MYSQL_DATABASE: users
+       MYSQL_USER: mysql
+       MYSQL_PASSWORD: 123456 
+
+   redis1:
+     image: evansking/redis
+     volumes:
+       - ~/share:/share
+     container_name: "redis1"
+     
+   redis2:
+     image: evansking/redis
+     volumes:
+       - ~/share:/share
+     container_name: "redis2"
+     
+   redis3:
+     image: evansking/redis
+     volumes:
+       - ~/share:/share
+     container_name: "redis3"
+
+   redis4:
+     image: evansking/redis
+     volumes:
+       - ~/share:/share
+     container_name: "redis4"
