@@ -17,27 +17,57 @@ services:
 
    redis1:
      image: evansking/redis
+     restart: always
      volumes:
        - ~/share:/share
      container_name: "redis1"
      
    redis2:
      image: evansking/redis
+     restart: always
      volumes:
        - ~/share:/share
      container_name: "redis2"
      
    redis3:
      image: evansking/redis
+     restart: always
      volumes:
        - ~/share:/share
      container_name: "redis3"
 
    redis4:
      image: evansking/redis
+     restart: always
      volumes:
        - ~/share:/share
      container_name: "redis4"
+
+   zookeeper1:
+     image: zookeeper:latest
+     container_name: "zookeeper1"
+     restart: always
+     environment:
+       ZOO_MY_ID: 1
+       ZOO_SERVERS: server.1=zookeeper1:2888:3888 server.2=zookeeper2:2888:3888 server.3=zookeeper3:2888:3888
+
+   zookeeper2:
+     image: zookeeper:latest
+     container_name: "zookeeper2"
+     restart: always
+     environment:
+       ZOO_MY_ID: 2 
+       ZOO_SERVERS: server.1=zookeeper1:2888:3888 server.2=zookeeper2:2888:3888 server.3=zookeeper3:2888:3888
+
+
+   zookeeper3:
+     image: zookeeper:latest
+     container_name: "zookeeper3"
+     restart: always
+     environment:
+       ZOO_MY_ID: 3 
+       ZOO_SERVERS: server.1=zookeeper1:2888:3888 server.2=zookeeper2:2888:3888 server.3=zookeeper3:2888:3888
+
    dev:
      image: evansking/nodedev
      command: jupyter lab --ip=0.0.0.0 --port=8888 --allow-root
@@ -54,9 +84,15 @@ services:
        - redis2
        - redis3
        - redis4
+       - zookeeper1
+       - zookeeper2
+       - zookeeper3
      links:
        - redis1:test1
        - redis2:test2
        - redis3:test3
        - redis4:test4
+       - zookeeper1:zookeeper1
+       - zookeeper2:zookeeper2
+       - zookeeper3:zookeeper3
        - db:rdb
