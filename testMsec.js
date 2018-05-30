@@ -15,3 +15,4 @@ console.log(now('milli',hrTimer));
 console.log(now('micro',hrTimer));
 console.log(now('nano',hrTimer));
 console.log(Date.now()/1000);
+console.log(Date.now() %6);

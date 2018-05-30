@@ -28,7 +28,9 @@ config.init().then(
    });
    producer.on("ready", function() {
        console.log("Kafka Producer is connected and ready.");
-       kafkaService.sendRecord({ type: 1,userId: "evans", userId:"userid"+Date.now(),sessionId:"session",data:"hi"+Date.now(),partition:0,producer:producer}, function (err, data) {
+       var partition = Date.now() % 6;
+       console.log(partition);
+       kafkaService.sendRecord({ type: 1,userId: "evans", userId:"userid"+Date.now(),sessionId:"session",data:"hi"+Date.now(),partition:partition,producer:producer}, function (err, data) {
            if(err){
                console.log(err);
            }else{

@@ -25,7 +25,10 @@ config.init().then(
      host: ZookeeperHostString,  // zookeeper host omit if connecting directly to broker (see kafkaHost below)
      //kafkaHost: KafkaHostString, // connect directly to kafka broker (instantiates a KafkaClient)
      groupId: clientId,
-     sessionTimeout: 15000,
+     sessionTimeout: 10000,
+     autoCommit: true,
+     autoCommitIntervalMs: 100,
+     maxTickMessages: 10,
      protocol: ['roundrobin'],
      fromOffset: 'latest', // default
    }; 

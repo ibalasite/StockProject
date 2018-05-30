@@ -28,7 +28,7 @@ config.init().then(
         autoCommit: true,
         groupId: clientId,
         protocol: ['roundrobin'],
-        fetchMaxWaitMs: 1000,
+        fetchMaxWaitMs: 100,
         fetchMaxBytes: 1024 * 1024,
         fromOffset: false,
         encoding: "buffer"
