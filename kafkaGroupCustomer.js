@@ -2,6 +2,7 @@ var config= require('./config');
 var getHostString= require('./GetHostString');
 var redis = require('redis');
 var kafka = require('kafka-node');
+var ConsumerGroup = require('kafka-node').ConsumerGroup;
 var util = require('util');
 const args = require('yargs').argv;
 let clientId = "my-client-id";
@@ -12,33 +13,37 @@ console.log("cid:"+clientId)
 config.init().then(
 (configs)=>{
 
-    var KafkaServer = JSON.parse(configs["/KafkaServer"]);
     var ZookeeperServer = JSON.parse(configs["/ZookeeperServer"]);
     var ZookeeperHostString=getHostString(ZookeeperServer.list);
-    const client = new kafka.Client(ZookeeperHostString, clientId, {
-       sessionTimeout: 300,
-       spinDelay: 100,
-       retries: 2
-    });
+    var KafkaServer = JSON.parse(configs["/KafkaServer"]);
+    var KafkaHostString=getHostString(KafkaServer.list);
     const topics = [
-        {
-            topic: "test"
-        }
+             "test"
     ];
-    const options = {
-        autoCommit: true,
-        fetchMaxWaitMs: 1000,
-        fetchMaxBytes: 1024 * 1024,
-        encoding: "buffer"
-    };
- 
-   const consumer = new kafka.HighLevelConsumer(client, topics, options);
+    
+    var options = {
+     host: ZookeeperHostString,  // zookeeper host omit if connecting directly to broker (see kafkaHost below)
+     //kafkaHost: KafkaHostString, // connect directly to kafka broker (instantiates a KafkaClient)
+     groupId: clientId,
+     sessionTimeout: 15000,
+     protocol: ['roundrobin'],
+     fromOffset: 'latest', // default
+   }; 
+   var consumer = new ConsumerGroup(options, topics);
    consumer.on("message", function(message) {
-       console.log('%s read msg Topic="%s" Partition=%s Offset=%d', this.client.clientId, message.topic, message.partition, message.offset);
+   console.log(message);
+   console.log('%s read msg Topic="%s" Partition=%s Offset=%d', this.client.clientId, message.topic, message.partition, message.offset);
  
     // Read string into a buffer.
         var buf = new Buffer(message.value, "binary"); 
-        var decodedMessage = JSON.parse(buf.toString());
+        
+        var decodedMessage = {};
+       try {
+           decodedMessage = JSON.parse(buf.toString());
+       } catch(e) {
+           //console.log("error:"+e); 
+           decodedMessage = {data:buf.toString()}; // error in the above string (in this case, yes)!
+       }
         console.log(decodedMessage);
     //Events is a Sequelize Model Object. 
 /*
@@ -52,7 +57,10 @@ config.init().then(
        });
 */
    });
+    consumer.on('offsetOutOfRange', function (topic) {
+         console.log('offsetevent');
 
+    })
     consumer.on("error", function(err) {
         console.log("error", err);
     });

@@ -12,7 +12,6 @@ console.log("cid:"+clientId)
 config.init().then(
 (configs)=>{
 
-    var KafkaServer = JSON.parse(configs["/KafkaServer"]);
     var ZookeeperServer = JSON.parse(configs["/ZookeeperServer"]);
     var ZookeeperHostString=getHostString(ZookeeperServer.list);
     const client = new kafka.Client(ZookeeperHostString, clientId, {
@@ -27,8 +26,11 @@ config.init().then(
     ];
     const options = {
         autoCommit: true,
+        groupId: clientId,
+        protocol: ['roundrobin'],
         fetchMaxWaitMs: 1000,
         fetchMaxBytes: 1024 * 1024,
+        fromOffset: false,
         encoding: "buffer"
     };
  
@@ -38,7 +40,14 @@ config.init().then(
  
     // Read string into a buffer.
         var buf = new Buffer(message.value, "binary"); 
-        var decodedMessage = JSON.parse(buf.toString());
+        
+        var decodedMessage = {};
+       try {
+           decodedMessage = JSON.parse(buf.toString());
+       } catch(e) {
+           //console.log("error:"+e); 
+           decodedMessage = {data:buf.toString()}; // error in the above string (in this case, yes)!
+       }
         console.log(decodedMessage);
     //Events is a Sequelize Model Object. 
 /*
@@ -52,7 +61,10 @@ config.init().then(
        });
 */
    });
+    consumer.on('offsetOutOfRange', function (topic) {
+         console.log('offsetevent');
 
+    })
     consumer.on("error", function(err) {
         console.log("error", err);
     });
