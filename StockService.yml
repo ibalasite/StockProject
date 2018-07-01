@@ -10,10 +10,23 @@ services:
      ports:
        - "3306:3306"
      environment:
-       MYSQL_ROOT_PASSWORD: {yourpwd} 
+       MYSQL_ROOT_PASSWORD: <your pwd> 
        MYSQL_DATABASE: users
        MYSQL_USER: mysql
-       MYSQL_PASSWORD: {yourpwd} 
+       MYSQL_PASSWORD: <your pwd> 
+
+   mongodb:
+     image: mongo:latest
+     volumes:
+       - ~/data:/data
+     restart: always
+     container_name: "mongodb"
+     environment:
+       - MONGO_DATA_DIR=/data/db
+       - MONGO_LOG_DIR=/data/mongolog
+     ports:
+       - "27017:27017"
+     command: mongod --smallfiles --logpath=/data/mongolog 
 
    redis1:
      image: evansking/redis
@@ -128,6 +141,7 @@ services:
        - "80:8888"
      depends_on:
        - db
+       - mongodb
        - redis1
        - redis2
        - redis3
@@ -147,3 +161,4 @@ services:
        - zookeeper2:zookeeper2
        - zookeeper3:zookeeper3
        - db:rdb
+       - mongodb:mongodb
