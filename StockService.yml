@@ -136,6 +136,7 @@ services:
        - ~/share:/share
        - ~/data:/data
      container_name: "dev"
+     restart: always
      ports:
        - "3000:3000"
        - "80:8888"
